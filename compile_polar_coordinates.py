@@ -1,4 +1,5 @@
 import os
+import shutil
 import json
 import re
 from collections import defaultdict
@@ -73,6 +74,7 @@ def compile_polar_coordinates():
         df_polar_coordinates = []
         center_y, center_x = get_sc_circle_centers(sc_level)
         for case_id, channel, threshold in threshold_image_generator(sc_level):
+            print(case_id, channel)
             ys, xs = threshold.nonzero()
             # majority of delta_y and delta_x should be positive
             delta_ys = center_y - ys
@@ -84,9 +86,12 @@ def compile_polar_coordinates():
                 'Channel': channel,
                 'theta': thetas
             }))
+        if len(df_polar_coordinates) == 0:
+            continue
         df_polar_coordinates = pd.concat(df_polar_coordinates)
-        df_polar_coordinates.to_csv('polar_coordinates_ara_{}.csv'.format(str(sc_level).zfill(3)))
+        df_polar_coordinates.to_csv('polar_coordinates/polar_coordinates_ara_{}.csv'.format(str(sc_level).zfill(3)))
 
 
 if __name__ == '__main__':
+    os.makedirs('polar_coordinates', exist_ok=True)
     compile_polar_coordinates()
