@@ -80,8 +80,8 @@ def compile_polar_coordinates():
             # theta in radians
             thetas = np.arctan(delta_ys / delta_xs)
             df_polar_coordinates.append(pd.DataFrame({
-                'case': case_id,
-                'channel': channel,
+                'Case ID': case_id,
+                'Channel': channel,
                 'theta': thetas
             }))
         df_polar_coordinates = pd.concat(df_polar_coordinates)
