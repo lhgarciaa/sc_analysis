@@ -11,7 +11,7 @@ sc_indices = [TranslateColors.colorstring_to_index(sc_codec) for sc_codec in sc_
 os.makedirs('sc_masks', exist_ok=True)
 for sc_level in sc_levels:
     atlas_tiff_name = 'ARA-Coronal-{}_full_labels-01-append.tif'.format(str(sc_level).zfill(3))
-    atlas = cv2.imread('sc_atlas/{}'.format(atlas_tiff_name), -1)
+    atlas = cv2.imread('sc_atlas/ARA/{}'.format(atlas_tiff_name), -1)
     atlas = TranslateColors.rgbatlas_to_indexatlas(atlas)
     mask = np.zeros(shape=atlas.shape, dtype=np.uint8)
     # only right sc regions are white

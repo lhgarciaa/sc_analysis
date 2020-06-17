@@ -1,0 +1,5 @@
+06-17-2020:
+    update threshold image generator to use post-erase file when it exists
+    re-compile polar coordinates to use post-erase file when exists
+    re-run threshold downsize code to use post-erase file when exists
+    change output version to 1.1
