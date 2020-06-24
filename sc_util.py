@@ -13,6 +13,13 @@ sc_levels = range(83, 105)
 
 sc_custom_atlas_levels = [86, 90, 96, 100]
 
+sc_custom_centers = {
+    '86': [5812, 7355.5],
+    '90': [5504, 7355.5],
+    '96': [5431, 7355.5],
+    '100': [4964, 7355.5]
+}
+
 sc_codecs = {
     '254:121:255': 'Scig_b', '254:132:253': 'SCs_zo', '254:132:254': 'SCs_sg', '254:132:255': 'SCs_op',
     '254:133:249': 'SCm_dw', '254:133:250': 'SCm_ig', '254:133:251': 'SCM_ig-c', '254:133:252': 'SCM_ig-b',
@@ -34,16 +41,25 @@ def plots_out_dir():
     return d
 
 
-def get_sc_circle_centers(ara_level):
+def get_sc_circle_centers(ara_level, use_custom_centers=False):
+    ara_level = str(ara_level)
     # load pre-computed sc circle center
     with open('sc_circle_centers.json', 'r') as f:
         sc_circle_centers = json.load(f)
-    return sc_circle_centers[str(ara_level)]
+    if use_custom_centers:
+        if ara_level in sc_custom_centers:
+            return sc_custom_centers[ara_level]
+    return sc_circle_centers[ara_level]
+
+
+def get_case_ara_levels():
+    with open('case_ara_levels.json', 'r') as f:
+        case_ara_levels = json.load(f)
+    return case_ara_levels
 
 
 def get_ara_level_case_slides():
-    with open('case_ara_levels.json', 'r') as f:
-        case_ara_levels = json.load(f)
+    case_ara_levels = get_case_ara_levels()
     # re-organize case_ara_levels
     ara_level_case_slides = defaultdict(list)
     for ara_level_case_slide in case_ara_levels.values():
@@ -55,6 +71,7 @@ def get_ara_level_case_slides():
 # yields case_id, (case_slide), channel, (masked) threshold image array
 # at given ara level (int). threshold image is returned with signal set to 255
 def threshold_image_generator(ara_level, apply_sc_mask=True, return_case_slide=False):
+    ara_level = int(ara_level)
     if ara_level not in sc_levels:
         # StopIteration https://stackoverflow.com/questions/16780002/return-in-generator-together-with-yield-in-python-3-3
         return

@@ -1,5 +1,8 @@
-06-17-2020:
+06-17-2020 (v1.0 -> v1.1):
     update threshold image generator to use post-erase file when it exists
-    re-compile polar coordinates to use post-erase file when exists
-    re-run threshold downsize code to use post-erase file when exists
-    change output version to 1.1
+        re-compile polar coordinates to use post-erase file when exists
+        re-run threshold downsize code to use post-erase file when exists
+        change output version to 1.1
+    use round() for dashed angle lines coordinates
+        re-generate angle line images
+        re-generate wire+angle line images
